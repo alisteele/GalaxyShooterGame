@@ -219,9 +219,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\2D Galaxy Assets\Game\Scripts\EnemyAI.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Game\Scripts\Laser.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Game\Scripts\Player.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Game\Scripts\Powerup.cs" />
+    <Compile Include="Assets\2D Galaxy Assets\Game\Scripts\SpawnManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\2D Galaxy Assets\Game\Materials\Shaders\Galaxy.shader" />

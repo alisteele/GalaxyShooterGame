@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour {
 
+    [SerializeField]
+    private GameObject enemyExplosionPrefab;
 
     private float speed = 5.0f;
 
@@ -36,6 +38,7 @@ public class EnemyAI : MonoBehaviour {
                 Destroy(other.transform.parent.gameObject);
             }
             Destroy(other.gameObject);
+            Instantiate(enemyExplosionPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
         else if (other.tag == "Player")
@@ -47,8 +50,11 @@ public class EnemyAI : MonoBehaviour {
                 //by calling this we will subtract one life
                 player.Damage();
             }
+
             //this will destroy the ship
             Destroy(this.gameObject);
+            Instantiate(enemyExplosionPrefab, transform.position, Quaternion.identity);
+
         }
     }
 }

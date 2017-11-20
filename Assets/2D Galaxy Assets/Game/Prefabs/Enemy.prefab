@@ -78,6 +78,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a1041b32e44dd41b8e9b62ae086b8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyExplosionPrefab: {fileID: 1455483898579698, guid: 6259ac89aded8f14ba644c1dc8b9e588,
+    type: 2}
 --- !u!212 &212132505347698126
 SpriteRenderer:
   m_ObjectHideFlags: 1

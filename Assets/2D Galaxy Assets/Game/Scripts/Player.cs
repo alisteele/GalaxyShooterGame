@@ -4,11 +4,11 @@ using UnityEngine;
 
 //Colon stands for inherit
 public class Player : MonoBehaviour {
-
-
+    [SerializeField]
+    private GameObject explosionPrefab;
     public bool canTripleShot = false;
     public bool isSpeedBoostActive = false;
-    public bool isShieldBoostActive = false;
+    public bool shieldsActive = false;
     //Live system
     public int lives = 3;
 
@@ -19,6 +19,8 @@ public class Player : MonoBehaviour {
     private GameObject tripleShotPreFab;
     [SerializeField]
     private float fireRate = 0.25f;
+    [SerializeField]
+    private GameObject shieldGameObject;
 
     private float canFire = 0.0f;
  
@@ -117,10 +119,18 @@ private void Movement()
     public void Damage()
     {
         //subtract 1 life from player
+        //check if player has shields
+        if (shieldsActive == true)
+        {
+            shieldsActive = false;
+            shieldGameObject.SetActive(false);
+            return;//return method back to damage method
+        }
         lives--;
         //if lives is < 1 then destroy the player
         if (lives < 1)
         {
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
     }
@@ -149,16 +159,10 @@ private void Movement()
     }
 
 
-    public void ShieldBoostPowerUpOn()
+    public void EnableShields()
     {
-        isShieldBoostActive = true;
-        StartCoroutine(ShieldBoostPowerDownRoutine());
-    }
-
-    public IEnumerator ShieldBoostPowerDownRoutine()
-    {
-        yield return new WaitForSeconds(5.0f);
-        isShieldBoostActive = false;
+        shieldsActive = true;
+        shieldGameObject.SetActive(true);
     }
 }
 
