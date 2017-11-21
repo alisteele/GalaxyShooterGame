@@ -220,10 +220,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\2D Galaxy Assets\Game\Scripts\EnemyAI.cs" />
+    <Compile Include="Assets\2D Galaxy Assets\Game\Scripts\ExplosionEffect.cs" />
+    <Compile Include="Assets\2D Galaxy Assets\Game\Scripts\GameManager.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Game\Scripts\Laser.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Game\Scripts\Player.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Game\Scripts\Powerup.cs" />
     <Compile Include="Assets\2D Galaxy Assets\Game\Scripts\SpawnManager.cs" />
+    <Compile Include="Assets\2D Galaxy Assets\Game\Scripts\UIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\2D Galaxy Assets\Game\Materials\Shaders\Galaxy.shader" />
