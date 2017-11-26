@@ -22,20 +22,59 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private GameObject shieldGameObject;
 
+    //ShipDamageArray
+    [SerializeField]
+    private GameObject[] engines;
+
     private float canFire = 0.0f;
  
-
-
     //Serializefield allows the variable beneath to be manipulated in Unity.
     [SerializeField]
     private float speed = 10.0f;
-    
+    //game manager reference for title screen
+    private GameManager gameManager;
+    //uimanager 
+    private UIManager uiManager;
+
+    private SpawnManager spawnManager;
+
+    //laser shot
+    private AudioSource audioSource;
+
+    //shipdamageAnim to determine how many times we have been hit
+    private int hitCount = 0;
+
+
     //Both methods are part of the monobehaviour runtime
 	// Use this for initialization
 	private void Start () {
         //current position = new position. Player starts on left then is set to 0,0,0
         transform.position = new Vector3(0,0,0);
-       
+
+        uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
+        if (uiManager != null)
+        {
+            //this will get passed to uimanager. if we put 1 in place of lives it will be passed
+            // as lives 1 image
+            uiManager.UpdateLives(lives);
+        }
+
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        //spawn manager
+        spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+
+        if (spawnManager != null)
+        {
+            spawnManager.StartSpawnRoutines();
+        }
+
+        //give access to audio source for laser shot
+        audioSource = GetComponent<AudioSource>();
+
+        //use variable for shipdamageAnim
+        hitCount = 0;
     }
 
     // Update is called once per frame
@@ -57,6 +96,8 @@ public class Player : MonoBehaviour {
       
         if (Time.time > canFire)
         {
+            //play laser music
+            audioSource.Play();
             if (canTripleShot == true)
             {
                 Instantiate(tripleShotPreFab, transform.position, Quaternion.identity);
@@ -120,17 +161,42 @@ private void Movement()
     {
         //subtract 1 life from player
         //check if player has shields
+
+       
         if (shieldsActive == true)
         {
             shieldsActive = false;
             shieldGameObject.SetActive(false);
             return;//return method back to damage method
         }
+        //Every time ship is damaged plus one for damage anim feature
+        hitCount++;
+
+        if (hitCount == 1)
+        {
+            //turn left engine failure anim on
+            engines[0].SetActive(true);
+        }
+        else if (hitCount == 2)
+        {
+            //turn right engine failure anim on
+            engines[1].SetActive(true);
+        }
+
         lives--;
+        //this will update life image 
+        uiManager.UpdateLives(lives);
+
         //if lives is < 1 then destroy the player
         if (lives < 1)
         {
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            //bring back title screen
+            gameManager.gameOver = true;
+            //show title screen
+            uiManager.ShowTitleScreen();
+
+
             Destroy(this.gameObject);
         }
     }

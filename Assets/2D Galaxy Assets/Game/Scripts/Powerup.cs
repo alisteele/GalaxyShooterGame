@@ -9,6 +9,9 @@ public class Powerup : MonoBehaviour {
     [SerializeField]
     private int powerupID; //0=triple shot, 1= speed boost, 2=defence shiefl
 
+    //powerup sound
+    [SerializeField]
+    private AudioClip clip;
 
 
 
@@ -16,6 +19,11 @@ public class Powerup : MonoBehaviour {
     void Update () {
 
         transform.Translate(Vector3.down * speed * Time.deltaTime);
+        //check if off screen and destroy object
+        if (transform.position.y < -7)
+        {
+            Destroy(this.gameObject);
+        }
 	}
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -27,6 +35,8 @@ public class Powerup : MonoBehaviour {
         {
             //access the player
             Player player = other.GetComponent<Player>();
+
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, 1f);
 
             if (player != null)
             {
